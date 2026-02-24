@@ -4,20 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>El Resolvito - Tu Tienda en La Habana</title>
-    <meta name="description" content="Tienda online en La Habana Vieja. Alimentos, ropa, manualidades y servicios. Envío a domicilio.">
+    <meta name="description" content="Tienda online en La Habana Vieja. Alimentos, ropa, manualidades, servicios y alquileres.">
     
-    <!-- OneSignal SDK -->
+    <!-- ============================================ -->
+    <!-- CONFIGURACIÓN DE ONESIGNAL (NO TOCAR) -->
+    <!-- ============================================ -->
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
     
-    <!-- Tailwind CSS -->
+    <!-- FUENTES Y ESTILOS EXTERNOS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- TAILWIND CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <script>
         tailwind.config = {
             theme: {
@@ -28,166 +28,90 @@
                     },
                     colors: {
                         'cuban-green': '#2E7D32',
+                        'cuban-dark': '#1B5E20',
                         'cuban-yellow': '#FFB300',
                         'cuban-blue': '#0277BD',
                         'cuban-cream': '#FFF8E1',
-                        'cuban-dark': '#1B5E20',
+                        'cuban-orange': '#FF6F00'
                     }
                 }
             }
         }
     </script>
 
+    <!-- ============================================ -->
+    <!-- ESTILOS PERSONALIZADOS (NO TOCAR) -->
+    <!-- ============================================ -->
     <style>
-        * {
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
+        * { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+        body { font-family: 'Open Sans', sans-serif; background-color: #FFF8E1; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+        
+        .product-card { transition: all 0.3s ease; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px rgba(0,0,0,0.1); }
+        
+        .modal-enter { animation: modalIn 0.3s ease-out; }
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
         
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: #FFF8E1;
-        }
-        
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .product-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        
-        .modal-enter {
-            animation: modalSlideIn 0.3s ease-out;
-        }
-        
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        
-        .cart-slide {
-            transition: transform 0.3s ease-in-out;
-        }
-        
-        .cart-open {
-            transform: translateY(0) !important;
-        }
-        
-        .notification-toast {
-            animation: slideInRight 0.5s ease-out;
-        }
-        
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        .pulse-ring {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-        }
-        
-        @keyframes pulse-ring {
-            0% { transform: scale(0.8); opacity: 0.8; }
-            100% { transform: scale(1.3); opacity: 0; }
-        }
+        .cart-slide { transition: transform 0.3s ease-in-out; }
+        .cart-open { transform: translateY(0) !important; }
         
         .hero-gradient {
             background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 50%, #0277BD 100%);
             background-size: 200% 200%;
             animation: gradientShift 8s ease infinite;
         }
-        
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
         
-        .category-pill {
-            scroll-snap-align: start;
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .btn-whatsapp { background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); }
+        
+        /* Animación de notificación */
+        .toast-enter { animation: slideIn 0.4s ease-out; }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
         
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        
-        .quantity-btn {
-            min-width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .service-card {
-            background: linear-gradient(145deg, #ffffff 0%, #f3f4f6 100%);
-        }
-        
-        .price-tag {
-            background: linear-gradient(135deg, #FFB300 0%, #FFA000 100%);
-        }
-        
-        .btn-whatsapp {
-            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-        }
-        
-        .floating-action {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        
-        .stock-badge {
-            font-size: 0.65rem;
-        }
+        /* Efecto de carga */
+        .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 <base target="_blank">
 </head>
 <body class="bg-cuban-cream text-gray-800 pb-20">
 
-    <!-- OneSignal Subscription Button -->
-    <button id="notificationBtn" class="fixed top-20 right-4 z-40 bg-cuban-blue text-white p-3 rounded-full shadow-lg hidden hover:bg-blue-700 transition-colors floating-action">
+    <!-- ============================================ -->
+    <!-- BOTÓN DE NOTIFICACIONES (ONESIGNAL) -->
+    <!-- ============================================ -->
+    <button id="notificationBtn" class="fixed top-20 right-4 z-40 bg-cuban-blue text-white p-3 rounded-full shadow-lg hidden hover:bg-blue-700 transition">
         <i class="fas fa-bell"></i>
         <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-pulse">1</span>
     </button>
 
-    <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/5356382909" target="_blank" class="fixed bottom-20 right-4 z-40 btn-whatsapp text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform floating-action">
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/5356382909" target="_blank" class="fixed bottom-20 right-4 z-40 btn-whatsapp text-white p-4 rounded-full shadow-lg hover:scale-110 transition">
         <i class="fab fa-whatsapp text-2xl"></i>
     </a>
 
-    <!-- Cart Float Button -->
-    <button onclick="toggleCart()" class="fixed bottom-4 right-4 z-40 bg-cuban-green text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform floating-action">
+    <!-- BOTÓN FLOTANTE CARRITO -->
+    <button onclick="toggleCart()" class="fixed bottom-4 right-4 z-40 bg-cuban-green text-white p-4 rounded-full shadow-lg hover:scale-110 transition">
         <i class="fas fa-shopping-cart text-xl"></i>
         <span id="cartCount" class="absolute -top-1 -right-1 bg-cuban-yellow text-cuban-dark text-sm font-bold rounded-full w-6 h-6 flex items-center justify-center hidden">0</span>
     </button>
 
-    <!-- Header -->
+    <!-- ============================================ -->
+    <!-- HEADER Y NAVEGACIÓN -->
+    <!-- ============================================ -->
     <header class="sticky top-0 z-50 bg-white shadow-md">
         <div class="container mx-auto px-4 py-3">
             <div class="flex items-center justify-between">
@@ -205,14 +129,15 @@
                     </div>
                 </div>
 
-                <div class="hidden lg:flex items-center gap-6">
+                <!-- Navegación escritorio -->
+                <nav class="hidden lg:flex items-center gap-6">
+                    <a href="#inicio" class="text-gray-700 hover:text-cuban-green font-medium">Inicio</a>
                     <a href="#mercado" class="text-gray-700 hover:text-cuban-green font-medium">Mercado</a>
+                    <a href="#reservas" class="text-gray-700 hover:text-cuban-green font-medium">Alojamientos</a>
                     <a href="#servicios" class="text-gray-700 hover:text-cuban-green font-medium">Servicios</a>
-                    <a href="#noticias" class="text-gray-700 hover:text-cuban-green font-medium">Ofertas</a>
-                    <a href="https://instagram.com/elresolvito.habana" target="_blank" class="text-pink-600 hover:text-pink-700">
-                        <i class="fab fa-instagram text-xl"></i>
-                    </a>
-                </div>
+                    <a href="#mayor" class="text-gray-700 hover:text-cuban-green font-medium">Por Mayor</a>
+                    <a href="#blog" class="text-gray-700 hover:text-cuban-green font-medium">Blog</a>
+                </nav>
 
                 <button onclick="toggleCart()" class="p-2 hover:bg-gray-100 rounded-lg relative lg:hidden">
                     <i class="fas fa-shopping-cart text-2xl text-cuban-green"></i>
@@ -221,10 +146,10 @@
             </div>
         </div>
 
-        <!-- Search Bar -->
+        <!-- Barra de búsqueda -->
         <div class="border-t border-gray-100 px-4 py-2">
             <div class="relative max-w-2xl mx-auto">
-                <input type="text" id="searchInput" placeholder="Buscar productos..." 
+                <input type="text" id="searchInput" placeholder="Buscar productos, servicios..." 
                     class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-cuban-green focus:ring-2 focus:ring-cuban-green/20"
                     onkeyup="searchProducts()">
                 <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
@@ -232,53 +157,35 @@
         </div>
     </header>
 
-    <!-- Mobile Menu -->
+    <!-- Menú móvil -->
     <div id="mobileMenu" class="fixed inset-0 bg-black/50 z-50 hidden" onclick="toggleMenu()">
         <div class="bg-white w-3/4 max-w-sm h-full p-6" onclick="event.stopPropagation()">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold text-cuban-green">Menú</h2>
-                <button onclick="toggleMenu()" class="p-2">
-                    <i class="fas fa-times text-2xl"></i>
-                </button>
+                <button onclick="toggleMenu()" class="p-2"><i class="fas fa-times text-2xl"></i></button>
             </div>
             <nav class="space-y-4">
-                <a href="#mercado" onclick="toggleMenu()" class="block p-3 rounded-lg hover:bg-gray-100">
-                    <i class="fas fa-shopping-basket mr-3 text-cuban-green"></i>Mercado
-                </a>
-                <a href="#servicios" onclick="toggleMenu()" class="block p-3 rounded-lg hover:bg-gray-100">
-                    <i class="fas fa-tools mr-3 text-cuban-green"></i>Servicios
-                </a>
-                <a href="#noticias" onclick="toggleMenu()" class="block p-3 rounded-lg hover:bg-gray-100">
-                    <i class="fas fa-newspaper mr-3 text-cuban-green"></i>Ofertas y Noticias
-                </a>
-                <a href="https://instagram.com/elresolvito.habana" target="_blank" class="block p-3 rounded-lg hover:bg-gray-100">
-                    <i class="fab fa-instagram mr-3 text-pink-600"></i>Instagram
-                </a>
-                <a href="mailto:elresolvito@gmail.com" class="block p-3 rounded-lg hover:bg-gray-100">
-                    <i class="fas fa-envelope mr-3 text-cuban-blue"></i>Contactar
-                </a>
+                <a href="#inicio" onclick="toggleMenu()" class="block p-3 rounded-lg hover:bg-gray-100"><i class="fas fa-home mr-3 text-cuban-green"></i>Inicio</a>
+                <a href="#mercado" onclick="toggleMenu()" class="block p-3 rounded-lg hover:bg-gray-100"><i class="fas fa-shopping-basket mr-3 text-cuban-green"></i>Mercado</a>
+                <a href="#reservas" onclick="toggleMenu()" class="block p-3 rounded-lg hover:bg-gray-100"><i class="fas fa-bed mr-3 text-cuban-green"></i>Alojamientos</a>
+                <a href="#servicios" onclick="toggleMenu()" class="block p-3 rounded-lg hover:bg-gray-100"><i class="fas fa-tools mr-3 text-cuban-green"></i>Servicios</a>
+                <a href="#mayor" onclick="toggleMenu()" class="block p-3 rounded-lg hover:bg-gray-100"><i class="fas fa-boxes mr-3 text-cuban-green"></i>Venta Mayor</a>
+                <a href="#blog" onclick="toggleMenu()" class="block p-3 rounded-lg hover:bg-gray-100"><i class="fas fa-newspaper mr-3 text-cuban-green"></i>Blog</a>
+                <a href="https://instagram.com/elresolvito.habana" target="_blank" class="block p-3 rounded-lg hover:bg-gray-100"><i class="fab fa-instagram mr-3 text-pink-600"></i>Instagram</a>
             </nav>
-            
-            <div class="mt-8 p-4 bg-cuban-cream rounded-lg">
-                <p class="text-sm text-gray-600 mb-2"><i class="fab fa-whatsapp text-green-500 mr-2"></i>5356382909</p>
-                <p class="text-sm text-gray-600"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i>La Habana Vieja</p>
-            </div>
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero-gradient text-white py-12 px-4 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
-            <div class="absolute bottom-10 right-10 w-48 h-48 bg-cuban-yellow rounded-full blur-3xl"></div>
-        </div>
-        
+    <!-- ============================================ -->
+    <!-- SECCIÓN HERO (INICIO) -->
+    <!-- ============================================ -->
+    <section id="inicio" class="hero-gradient text-white py-12 px-4 relative overflow-hidden">
         <div class="container mx-auto max-w-4xl relative z-10 text-center">
             <span class="inline-block bg-cuban-yellow text-cuban-dark px-4 py-1 rounded-full text-sm font-bold mb-4 animate-pulse">
                 🎉 Envío solo $200 en La Habana Vieja
             </span>
             <h2 class="text-3xl md:text-5xl font-bold mb-4">Todo lo que necesitas, <br>al alcance de tu mano</h2>
-            <p class="text-lg md:text-xl opacity-90 mb-6">Alimentos, higiene, bebidas y servicios en tu zona</p>
+            <p class="text-lg md:text-xl opacity-90 mb-6">Productos frescos, alojamientos, servicios y más</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="#mercado" class="bg-white text-cuban-green px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition shadow-lg">
                     Ver Productos
@@ -290,61 +197,88 @@
         </div>
     </section>
 
-    <!-- Categories -->
+    <!-- ============================================ -->
+    <!-- SECCIÓN CATEGORÍAS -->
+    <!-- ============================================ -->
     <section class="py-6 bg-white shadow-sm sticky top-[120px] z-30">
         <div class="container mx-auto px-4">
             <div class="flex gap-3 overflow-x-auto hide-scrollbar pb-2" id="categoryContainer">
-                <button onclick="filterCategory('todos')" class="category-pill px-6 py-2 bg-cuban-green text-white rounded-full whitespace-nowrap font-medium hover:shadow-md transition active">
-                    Todos
-                </button>
-                <button onclick="filterCategory('Alimentos y conservas')" class="category-pill px-6 py-2 bg-gray-100 text-gray-700 rounded-full whitespace-nowrap font-medium hover:bg-gray-200 transition">
-                    Alimentos
-                </button>
-                <button onclick="filterCategory('Snacks y golosinas')" class="category-pill px-6 py-2 bg-gray-100 text-gray-700 rounded-full whitespace-nowrap font-medium hover:bg-gray-200 transition">
-                    Snacks
-                </button>
-                <button onclick="filterCategory('Higiene personal')" class="category-pill px-6 py-2 bg-gray-100 text-gray-700 rounded-full whitespace-nowrap font-medium hover:bg-gray-200 transition">
-                    Higiene
-                </button>
-                <button onclick="filterCategory('Bebidas alcohólicas y malta')" class="category-pill px-6 py-2 bg-gray-100 text-gray-700 rounded-full whitespace-nowrap font-medium hover:bg-gray-200 transition">
-                    Bebidas
-                </button>
-                <button onclick="filterCategory('Salsas')" class="category-pill px-6 py-2 bg-gray-100 text-gray-700 rounded-full whitespace-nowrap font-medium hover:bg-gray-200 transition">
-                    Salsas
-                </button>
-                <button onclick="filterCategory('Perfumes y desodorantes')" class="category-pill px-6 py-2 bg-gray-100 text-gray-700 rounded-full whitespace-nowrap font-medium hover:bg-gray-200 transition">
-                    Perfumes
-                </button>
+                <button onclick="filterCategory('todos')" class="category-pill px-6 py-2 bg-cuban-green text-white rounded-full whitespace-nowrap font-medium transition">Todos</button>
+                <button onclick="filterCategory('Alimentos y conservas')" class="category-pill px-6 py-2 bg-gray-100 text-gray-700 rounded-full whitespace-nowrap font-medium hover:bg-gray-200 transition">Alimentos</button>
+                <button onclick="filterCategory('Snacks y golosinas')" class="category-pill px-6 py-2 bg-gray-100 text-gray-700 rounded-full whitespace-nowrap font-medium hover:bg-gray-200 transition">Snacks</button>
+                <button onclick="filterCategory('Higiene personal')" class="category-pill px-6 py-2 bg-gray-100 text-gray-700 rounded-full whitespace-nowrap font-medium hover:bg-gray-200 transition">Higiene</button>
+                <button onclick="filterCategory('Bebidas alcohólicas y malta')" class="category-pill px-6 py-2 bg-gray-100 text-gray-700 rounded-full whitespace-nowrap font-medium hover:bg-gray-200 transition">Bebidas</button>
+                <button onclick="filterCategory('Salsas')" class="category-pill px-6 py-2 bg-gray-100 text-gray-700 rounded-full whitespace-nowrap font-medium hover:bg-gray-200 transition">Salsas</button>
+                <button onclick="filterCategory('Perfumes y desodorantes')" class="category-pill px-6 py-2 bg-gray-100 text-gray-700 rounded-full whitespace-nowrap font-medium hover:bg-gray-200 transition">Perfumes</button>
             </div>
         </div>
     </section>
 
-    <!-- News & Offers Section -->
-    <section id="noticias" class="py-8 bg-gradient-to-r from-cuban-yellow/20 to-cuban-green/10">
+    <!-- ============================================ -->
+    <!-- SECCIÓN PROMOCIONES (EDITABLE) -->
+    <!-- ============================================ -->
+    <!-- 
+        PARA CAMBIAR LAS PROMOCIONES:
+        1. Busca en el código: "PROMO 1", "PROMO 2", "PROMO 3"
+        2. Cambia la URL de la imagen en: style="background-image: url('AQUI')"
+        3. Cambia el título y descripción en los <h3> y <p>
+    -->
+    <section id="promociones" class="py-8 bg-gradient-to-r from-cuban-yellow/20 to-cuban-green/10">
         <div class="container mx-auto px-4">
             <h2 class="text-2xl font-bold text-cuban-dark mb-6 flex items-center">
-                <i class="fas fa-bullhorn mr-3 text-cuban-yellow"></i>Ofertas del Mes
+                <i class="fas fa-percent mr-3 text-cuban-orange"></i>Promociones Especiales
             </h2>
             
-            <div class="grid md:grid-cols-2 gap-4">
-                <div class="bg-white rounded-xl p-6 shadow-md border-l-4 border-cuban-green">
-                    <span class="bg-red-500 text-white text-xs px-2 py-1 rounded font-bold">NUEVO</span>
-                    <h3 class="font-bold text-lg mt-2">Compra por Mayor</h3>
-                    <p class="text-gray-600 text-sm mt-1">Descuentos especiales para compras al por mayor. Consulta disponibilidad de café, huevos y conservas.</p>
-                    <button onclick="openNewsModal('mayor')" class="mt-3 text-cuban-green font-medium text-sm hover:underline">Ver más →</button>
+            <div class="grid md:grid-cols-3 gap-4">
+                <!-- PROMO 1: Cambia la imagen en la URL de abajo -->
+                <div class="relative h-48 rounded-xl overflow-hidden shadow-lg group cursor-pointer" onclick="showPromoDetail(1)">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform group-hover:scale-110" 
+                         style="background-image: url('https://images.unsplash.com/photo-1550989460-0adf9ea622e2?w=500&auto=format&fit=crop&q=60')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-4 text-white">
+                        <span class="bg-cuban-orange text-xs px-2 py-1 rounded font-bold">-20%</span>
+                        <h3 class="font-bold text-lg mt-1">Combo Desayuno</h3>
+                        <p class="text-sm opacity-90">Café + Leche + Huevos</p>
+                    </div>
                 </div>
-                
-                <div class="bg-white rounded-xl p-6 shadow-md border-l-4 border-cuban-blue">
-                    <span class="bg-cuban-blue text-white text-xs px-2 py-1 rounded font-bold">PROMO</span>
-                    <h3 class="font-bold text-lg mt-2">Envío Gratis</h3>
-                    <p class="text-gray-600 text-sm mt-1">En compras superiores a $5000 en La Habana Vieja. ¡Aprovecha!</p>
-                    <button onclick="openNewsModal('envio')" class="mt-3 text-cuban-blue font-medium text-sm hover:underline">Ver condiciones →</button>
+
+                <!-- PROMO 2: Cambia la imagen en la URL de abajo -->
+                <div class="relative h-48 rounded-xl overflow-hidden shadow-lg group cursor-pointer" onclick="showPromoDetail(2)">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform group-hover:scale-110" 
+                         style="background-image: url('https://images.unsplash.com/photo-1544148103-0773bf10d330?w=500&auto=format&fit=crop&q=60')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-4 text-white">
+                        <span class="bg-cuban-orange text-xs px-2 py-1 rounded font-bold">NUEVO</span>
+                        <h3 class="font-bold text-lg mt-1">Alojamiento Weekend</h3>
+                        <p class="text-sm opacity-90">3 noches al precio de 2</p>
+                    </div>
+                </div>
+
+                <!-- PROMO 3: Cambia la imagen en la URL de abajo -->
+                <div class="relative h-48 rounded-xl overflow-hidden shadow-lg group cursor-pointer" onclick="showPromoDetail(3)">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform group-hover:scale-110" 
+                         style="background-image: url('https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=500&auto=format&fit=crop&q=60')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-4 text-white">
+                        <span class="bg-cuban-orange text-xs px-2 py-1 rounded font-bold">MAYOR</span>
+                        <h3 class="font-bold text-lg mt-1">Precio Especial</h3>
+                        <p class="text-sm opacity-90">Compra por volumen</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Products Section -->
+    <!-- ============================================ -->
+    <!-- SECCIÓN CATÁLOGO DE PRODUCTOS (CARGA DESDE CSV) -->
+    <!-- ============================================ -->
+    <!-- 
+        PARA ACTUALIZAR PRODUCTOS:
+        1. Sube tu archivo CSV a una URL pública (GitHub, Google Drive público, etc.)
+        2. Cambia la URL en la variable CSV_URL abajo en el JavaScript
+        3. La estructura del CSV debe ser:
+           id,nombre,categoria,precio,imagen,descripcion,stock
+    -->
     <section id="mercado" class="py-8">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center mb-6">
@@ -354,73 +288,388 @@
                 <span id="productCount" class="text-gray-500 text-sm">Cargando...</span>
             </div>
 
-            <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-                <!-- Products injected here -->
+            <!-- Estado de carga -->
+            <div id="loadingProducts" class="text-center py-12">
+                <div class="inline-block w-12 h-12 border-4 border-cuban-green border-t-transparent rounded-full animate-spin"></div>
+                <p class="text-gray-500 mt-4">Cargando productos...</p>
+            </div>
+
+            <!-- Grid de productos -->
+            <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 hidden">
+                <!-- Productos se cargan aquí desde CSV -->
             </div>
             
+            <!-- Sin resultados -->
             <div id="noResults" class="hidden text-center py-12">
                 <i class="fas fa-search text-4xl text-gray-300 mb-4"></i>
                 <p class="text-gray-500">No se encontraron productos</p>
             </div>
+
+            <!-- Error de carga -->
+            <div id="loadError" class="hidden text-center py-12">
+                <i class="fas fa-exclamation-triangle text-4xl text-yellow-500 mb-4"></i>
+                <p class="text-gray-600 mb-2">No se pudieron cargar los productos</p>
+                <button onclick="loadProductsFromCSV()" class="text-cuban-green font-medium hover:underline">Intentar de nuevo</button>
+            </div>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="servicios" class="py-8 bg-white">
+    <!-- ============================================ -->
+    <!-- SECCIÓN ALOJAMIENTOS/RESERVAS (PREVIEW) -->
+    <!-- ============================================ -->
+    <!-- 
+        PARA AÑADIR MÁS PROPIEDADES:
+        1. Copia el bloque que empieza con <!-- PROPIEDAD 1 -->
+        2. Pégalo después del último
+        3. Cambia la imagen, título, precio y características
+        4. Cuando tengas muchas, crearemos página aparte
+    -->
+    <section id="reservas" class="py-8 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-2xl font-bold text-cuban-dark mb-6 flex items-center">
-                <i class="fas fa-tools mr-3 text-cuban-blue"></i>Servicios Disponibles
-            </h2>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="service-card rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer" onclick="openServiceModal('barbero')">
-                    <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 text-2xl">💈</div>
-                    <h3 class="font-bold text-lg mb-2">Barbero</h3>
-                    <p class="text-gray-600 text-sm">Cortes modernos, barba y tratamientos capilares a domicilio.</p>
-                    <span class="inline-block mt-3 text-cuban-green text-sm font-medium">Ver disponibilidad →</span>
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-cuban-dark">
+                    <i class="fas fa-bed mr-3 text-cuban-blue"></i>Alojamientos
+                </h2>
+                <!-- Enlace a página futura de reservas -->
+                <a href="#" onclick="alert('Próximamente: página completa de reservas con calendario'); return false;" class="text-cuban-green font-medium hover:underline text-sm">
+                    Ver todos →
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- PROPIEDAD 1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition">
+                    <div class="relative h-48">
+                        <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&auto=format&fit=crop&q=60" 
+                             alt="Apartamento Centro" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2 bg-cuban-green text-white text-xs px-2 py-1 rounded-full">
+                            <i class="fas fa-star mr-1"></i>4.9
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">Apartamento Centro Histórico</h3>
+                        <p class="text-gray-500 text-sm mb-3"><i class="fas fa-map-marker-alt mr-1"></i>La Habana Vieja</p>
+                        
+                        <div class="flex gap-2 mb-3 text-sm text-gray-600">
+                            <span><i class="fas fa-user mr-1"></i>4 huéspedes</span>
+                            <span><i class="fas fa-wifi mr-1"></i>WiFi</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-cuban-green">$2,500</span>
+                                <span class="text-gray-500 text-sm">/noche</span>
+                            </div>
+                            <button onclick="openReservationModal('Apartamento Centro Histórico')" class="bg-cuban-blue text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
+                                Reservar
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="service-card rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer" onclick="openServiceModal('tapiceria')">
-                    <div class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center mb-4 text-2xl">🛋️</div>
-                    <h3 class="font-bold text-lg mb-2">Tapicería</h3>
-                    <p class="text-gray-600 text-sm">Reparación y restauración de muebles, sillas y sofás.</p>
-                    <span class="inline-block mt-3 text-cuban-green text-sm font-medium">Solicitar presupuesto →</span>
+
+                <!-- PROPIEDAD 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition">
+                    <div class="relative h-48">
+                        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=500&auto=format&fit=crop&q=60" 
+                             alt="Casa Colonial" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2 bg-cuban-green text-white text-xs px-2 py-1 rounded-full">
+                            <i class="fas fa-star mr-1"></i>5.0
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">Casa Colonial Completa</h3>
+                        <p class="text-gray-500 text-sm mb-3"><i class="fas fa-map-marker-alt mr-1"></i>Centro Habana</p>
+                        
+                        <div class="flex gap-2 mb-3 text-sm text-gray-600">
+                            <span><i class="fas fa-user mr-1"></i>6 huéspedes</span>
+                            <span><i class="fas fa-car mr-1"></i>Parqueo</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-cuban-green">$4,000</span>
+                                <span class="text-gray-500 text-sm">/noche</span>
+                            </div>
+                            <button onclick="openReservationModal('Casa Colonial Completa')" class="bg-cuban-blue text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
+                                Reservar
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="service-card rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer" onclick="openServiceModal('renta')">
-                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-4 text-2xl">🏠</div>
-                    <h3 class="font-bold text-lg mb-2">Casa de Renta</h3>
-                    <p class="text-gray-600 text-sm">Alojamiento en La Habana Vieja. WiFi, aire acondicionado.</p>
-                    <span class="inline-block mt-3 text-cuban-green text-sm font-medium">Ver fotos →</span>
-                </div>
-                
-                <div class="service-card rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer" onclick="openServiceModal('reparaciones')">
-                    <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mb-4 text-2xl">🔨</div>
-                    <h3 class="font-bold text-lg mb-2">Reparaciones</h3>
-                    <p class="text-gray-600 text-sm">Electricidad, plomería, carpintería y más servicios.</p>
-                    <span class="inline-block mt-3 text-cuban-green text-sm font-medium">Contactar →</span>
+
+                <!-- PROPIEDAD 3 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition">
+                    <div class="relative h-48">
+                        <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=500&auto=format&fit=crop&q=60" 
+                             alt="Estudio Moderno" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2 bg-cuban-green text-white text-xs px-2 py-1 rounded-full">
+                            <i class="fas fa-star mr-1"></i>4.7
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg mb-1">Estudio Moderno</h3>
+                        <p class="text-gray-500 text-sm mb-3"><i class="fas fa-map-marker-alt mr-1"></i>Vedado</p>
+                        
+                        <div class="flex gap-2 mb-3 text-sm text-gray-600">
+                            <span><i class="fas fa-user mr-1"></i>2 huéspedes</span>
+                            <span><i class="fas fa-snowflake mr-1"></i>A/C</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-2xl font-bold text-cuban-green">$1,800</span>
+                                <span class="text-gray-500 text-sm">/noche</span>
+                            </div>
+                            <button onclick="openReservationModal('Estudio Moderno')" class="bg-cuban-blue text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
+                                Reservar
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-cuban-dark text-white py-8 mt-8">
+    <!-- ============================================ -->
+    <!-- SECCIÓN SERVICIOS (PREVIEW) -->
+    <!-- ============================================ -->
+    <!-- 
+        PARA AÑADIR MÁS SERVICIOS:
+        1. Copia el bloque que empieza con <!-- SERVICIO 1 -->
+        2. Pégalo después del último
+        3. Cambia el icono, título y descripción
+        4. Cuando tengas muchos, crearemos página aparte
+    -->
+    <section id="servicios" class="py-8 bg-cuban-cream">
         <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-3 gap-8 text-center md:text-left">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-cuban-dark">
+                    <i class="fas fa-tools mr-3 text-cuban-orange"></i>Servicios
+                </h2>
+                <!-- Enlace a página futura de servicios -->
+                <a href="#" onclick="alert('Próximamente: página completa de servicios'); return false;" class="text-cuban-green font-medium hover:underline text-sm">
+                    Ver todos →
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- SERVICIO 1 -->
+                <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer" onclick="openServiceDetail('barbero')">
+                    <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4 text-2xl">💈</div>
+                    <h3 class="font-bold text-lg mb-2">Barbero a Domicilio</h3>
+                    <p class="text-gray-600 text-sm mb-3">Cortes modernos, barba y tratamientos capilares.</p>
+                    <span class="text-cuban-green font-medium text-sm">Desde $300 →</span>
+                </div>
+
+                <!-- SERVICIO 2 -->
+                <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer" onclick="openServiceDetail('tapiceria')">
+                    <div class="w-14 h-14 bg-amber-100 rounded-full flex items-center justify-center mb-4 text-2xl">🛋️</div>
+                    <h3 class="font-bold text-lg mb-2">Tapicería</h3>
+                    <p class="text-gray-600 text-sm mb-3">Restauración de muebles y cambio de tela.</p>
+                    <span class="text-cuban-green font-medium text-sm">Presupuesto gratis →</span>
+                </div>
+
+                <!-- SERVICIO 3 -->
+                <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer" onclick="openServiceDetail('electricidad')">
+                    <div class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center mb-4 text-2xl">⚡</div>
+                    <h3 class="font-bold text-lg mb-2">Electricidad</h3>
+                    <p class="text-gray-600 text-sm mb-3">Instalaciones, reparaciones y mantenimiento.</p>
+                    <span class="text-cuban-green font-medium text-sm">Urgencias 24h →</span>
+                </div>
+
+                <!-- SERVICIO 4 -->
+                <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer" onclick="openServiceDetail('plomeria')">
+                    <div class="w-14 h-14 bg-cyan-100 rounded-full flex items-center justify-center mb-4 text-2xl">🔧</div>
+                    <h3 class="font-bold text-lg mb-2">Plomería</h3>
+                    <p class="text-gray-600 text-sm mb-3">Destapes, fugas, instalación de sanitarios.</p>
+                    <span class="text-cuban-green font-medium text-sm">Servicio rápido →</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECCIÓN VENTA POR MAYOR (PREVIEW) -->
+    <!-- ============================================ -->
+    <section id="mayor" class="py-8 bg-gradient-to-br from-cuban-dark to-cuban-green text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-3xl font-bold mb-2">
+                        <i class="fas fa-boxes mr-3 text-cuban-yellow"></i>Venta al por Mayor
+                    </h2>
+                    <p class="text-white/80">Precios especiales para revendedores y negocios</p>
+                </div>
+                <a href="#" onclick="alert('Próximamente: catálogo completo mayorista'); return false;" class="mt-4 md:mt-0 bg-cuban-yellow text-cuban-dark px-6 py-3 rounded-full font-bold hover:bg-yellow-400 transition">
+                    Ver catálogo completo
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- PRODUCTO MAYOR 1 -->
+                <div class="bg-white/10 backdrop-blur rounded-xl p-6 border border-white/20">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://i.postimg.cc/WbZBX2hN/cafe_dualis_250_g_precio_1450.png" alt="Café" class="w-16 h-16 object-cover rounded-lg bg-white">
+                        <div>
+                            <h3 class="font-bold">Café Dualis</h3>
+                            <p class="text-sm text-white/70">Caja 10 unidades</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-2xl font-bold text-cuban-yellow">$13,000</span>
+                            <span class="text-sm text-white/70 line-through ml-2">$14,500</span>
+                        </div>
+                        <span class="bg-cuban-orange text-xs px-2 py-1 rounded font-bold">-10%</span>
+                    </div>
+                    <button onclick="addMayorToCart('Café Dualis caja', 13000, 1)" class="w-full mt-4 bg-white text-cuban-dark py-2 rounded-lg font-medium hover:bg-gray-100 transition">
+                        Añadir al pedido
+                    </button>
+                </div>
+
+                <!-- PRODUCTO MAYOR 2 -->
+                <div class="bg-white/10 backdrop-blur rounded-xl p-6 border border-white/20">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://i.postimg.cc/sDWkwVvv/carton_de_huevo_30_u_precio_3000.png" alt="Huevos" class="w-16 h-16 object-cover rounded-lg bg-white">
+                        <div>
+                            <h3 class="font-bold">Huevos</h3>
+                            <p class="text-sm text-white/70">3 cartones (90 unidades)</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-2xl font-bold text-cuban-yellow">$8,400</span>
+                            <span class="text-sm text-white/70 line-through ml-2">$9,000</span>
+                        </div>
+                        <span class="bg-cuban-orange text-xs px-2 py-1 rounded font-bold">-7%</span>
+                    </div>
+                    <button onclick="addMayorToCart('Huevos 3 cartones', 8400, 1)" class="w-full mt-4 bg-white text-cuban-dark py-2 rounded-lg font-medium hover:bg-gray-100 transition">
+                        Añadir al pedido
+                    </button>
+                </div>
+
+                <!-- PRODUCTO MAYOR 3 -->
+                <div class="bg-white/10 backdrop-blur rounded-xl p-6 border border-white/20">
+                    <div class="flex items-center gap-4 mb-4">
+                        <img src="https://i.postimg.cc/76xHK6zt/atun_precio_500.png" alt="Atún" class="w-16 h-16 object-cover rounded-lg bg-white">
+                        <div>
+                            <h3 class="font-bold">Atún en lata</h3>
+                            <p class="text-sm text-white/70">Pack 12 unidades</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-2xl font-bold text-cuban-yellow">$6,000</span>
+                            <span class="text-sm text-white/70 line-through ml-2">$6,480</span>
+                        </div>
+                        <span class="bg-cuban-orange text-xs px-2 py-1 rounded font-bold">-8%</span>
+                    </div>
+                    <button onclick="addMayorToCart('Atún pack 12u', 6000, 1)" class="w-full mt-4 bg-white text-cuban-dark py-2 rounded-lg font-medium hover:bg-gray-100 transition">
+                        Añadir al pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- SECCIÓN BLOG (PREVIEW) -->
+    <!-- ============================================ -->
+    <!-- 
+        PARA AÑADIR MÁS ARTÍCULOS:
+        1. Copia el bloque que empieza con <!-- ARTÍCULO 1 -->
+        2. Pégalo antes del botón "Ver todos los artículos"
+        3. Cambia la imagen, título, fecha y extracto
+        4. Cuando tengas muchos, crearemos página aparte
+    -->
+    <section id="blog" class="py-8 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-cuban-dark">
+                    <i class="fas fa-newspaper mr-3 text-cuban-blue"></i>Blog & Noticias
+                </h2>
+                <!-- Enlace a página futura del blog -->
+                <a href="#" onclick="alert('Próximamente: blog completo con todos los artículos'); return false;" class="text-cuban-green font-medium hover:underline text-sm">
+                    Ver todos →
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- ARTÍCULO 1 -->
+                <article class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition cursor-pointer" onclick="openArticle(1)">
+                    <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=500&auto=format&fit=crop&q=60" 
+                         alt="Cocina cubana" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-xs text-cuban-green font-medium">Gastronomía</span>
+                        <h3 class="font-bold text-lg mt-1 mb-2">5 recetas fáciles con productos básicos</h3>
+                        <p class="text-gray-600 text-sm line-clamp-2">Descubre cómo preparar deliciosos platos con los productos que encuentras en El Resolvito...</p>
+                        <div class="mt-3 flex items-center text-xs text-gray-500">
+                            <i class="far fa-calendar mr-1"></i> 15 de enero, 2024
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ARTÍCULO 2 -->
+                <article class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition cursor-pointer" onclick="openArticle(2)">
+                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=500&auto=format&fit=crop&q=60" 
+                         alt="Alojamiento" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-xs text-cuban-green font-medium">Turismo</span>
+                        <h3 class="font-bold text-lg mt-1 mb-2">Guía para alquilar en La Habana Vieja</h3>
+                        <p class="text-gray-600 text-sm line-clamp-2">Todo lo que necesitas saber antes de reservar tu alojamiento en el corazón de La Habana...</p>
+                        <div class="mt-3 flex items-center text-xs text-gray-500">
+                            <i class="far fa-calendar mr-1"></i> 10 de enero, 2024
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ARTÍCULO 3 -->
+                <article class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition cursor-pointer" onclick="openArticle(3)">
+                    <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=500&auto=format&fit=crop&q=60" 
+                         alt="Reparaciones" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <span class="text-xs text-cuban-green font-medium">Servicios</span>
+                        <h3 class="font-bold text-lg mt-1 mb-2">Mantenimiento preventivo del hogar</h3>
+                        <p class="text-gray-600 text-sm line-clamp-2">Consejos de nuestros expertos para evitar reparaciones costosas en tu casa...</p>
+                        <div class="mt-3 flex items-center text-xs text-gray-500">
+                            <i class="far fa-calendar mr-1"></i> 5 de enero, 2024
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- FOOTER -->
+    <!-- ============================================ -->
+    <footer class="bg-cuban-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
                 <div>
                     <h3 class="font-bold text-xl mb-4">El Resolvito</h3>
-                    <p class="text-gray-300 text-sm">Tu tienda de confianza en La Habana Vieja. Productos de calidad y servicios a tu alcance.</p>
+                    <p class="text-gray-300 text-sm">Tu solución integral en La Habana. Productos, alojamientos y servicios de confianza.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Enlaces</h4>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><a href="#mercado" class="hover:text-white">Tienda</a></li>
+                        <li><a href="#reservas" class="hover:text-white">Alojamientos</a></li>
+                        <li><a href="#servicios" class="hover:text-white">Servicios</a></li>
+                        <li><a href="#blog" class="hover:text-white">Blog</a></li>
+                    </ul>
                 </div>
                 <div>
                     <h4 class="font-bold mb-4">Contacto</h4>
-                    <p class="text-gray-300 text-sm mb-2"><i class="fab fa-whatsapp mr-2"></i>5356382909</p>
-                    <p class="text-gray-300 text-sm mb-2"><i class="fas fa-envelope mr-2"></i>elresolvito@gmail.com</p>
-                    <p class="text-gray-300 text-sm"><i class="fas fa-map-marker-alt mr-2"></i>La Habana Vieja, Cuba</p>
+                    <ul class="space-y-2 text-sm text-gray-300">
+                        <li><i class="fab fa-whatsapp mr-2"></i>5356382909</li>
+                        <li><i class="fas fa-envelope mr-2"></i>elresolvito@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i>La Habana Vieja</li>
+                    </ul>
                 </div>
                 <div>
                     <h4 class="font-bold mb-4">Síguenos</h4>
-                    <div class="flex justify-center md:justify-start gap-4">
+                    <div class="flex gap-4">
                         <a href="https://instagram.com/elresolvito.habana" target="_blank" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition">
                             <i class="fab fa-instagram"></i>
                         </a>
@@ -430,13 +679,17 @@
                     </div>
                 </div>
             </div>
-            <div class="border-t border-white/20 mt-8 pt-4 text-center text-gray-400 text-sm">
+            <div class="border-t border-white/20 pt-8 text-center text-gray-400 text-sm">
                 <p>&copy; 2024 El Resolvito. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Product Modal -->
+    <!-- ============================================ -->
+    <!-- MODALES (NO TOCAR - FUNCIONALIDAD) -->
+    <!-- ============================================ -->
+    
+    <!-- Modal de Producto -->
     <div id="productModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4" onclick="closeModal('productModal')">
         <div class="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto modal-enter" onclick="event.stopPropagation()">
             <div class="relative">
@@ -444,9 +697,6 @@
                 <button onclick="closeModal('productModal')" class="absolute top-2 right-2 w-8 h-8 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70">
                     <i class="fas fa-times"></i>
                 </button>
-                <span id="modalStock" class="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full stock-badge">
-                    Disponible
-                </span>
             </div>
             <div class="p-6">
                 <span id="modalCategory" class="text-cuban-green text-sm font-medium"></span>
@@ -456,35 +706,31 @@
                 <div class="flex items-center justify-between mb-6">
                     <span id="modalPrice" class="text-3xl font-bold text-cuban-green"></span>
                     <div class="flex items-center gap-3 bg-gray-100 rounded-lg p-1">
-                        <button onclick="adjustModalQuantity(-1)" class="quantity-btn bg-white rounded shadow text-gray-600 hover:bg-gray-50">-</button>
+                        <button onclick="adjustModalQuantity(-1)" class="w-8 h-8 bg-white rounded shadow text-gray-600 hover:bg-gray-50">-</button>
                         <span id="modalQuantity" class="font-bold w-8 text-center">1</span>
-                        <button onclick="adjustModalQuantity(1)" class="quantity-btn bg-white rounded shadow text-gray-600 hover:bg-gray-50">+</button>
+                        <button onclick="adjustModalQuantity(1)" class="w-8 h-8 bg-white rounded shadow text-gray-600 hover:bg-gray-50">+</button>
                     </div>
                 </div>
                 
                 <button onclick="addToCartFromModal()" class="w-full bg-cuban-green text-white py-3 rounded-xl font-bold text-lg hover:bg-cuban-dark transition flex items-center justify-center gap-2">
-                    <i class="fas fa-cart-plus"></i>
-                    Añadir al carrito
+                    <i class="fas fa-cart-plus"></i>Añadir al carrito
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Cart Sidebar -->
+    <!-- Carrito Sidebar -->
     <div id="cartOverlay" class="fixed inset-0 bg-black/50 z-50 hidden" onclick="toggleCart()"></div>
     <div id="cartSidebar" class="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-2xl z-50 transform translate-y-full cart-slide max-h-[85vh] flex flex-col">
         <div class="p-4 border-b flex justify-between items-center bg-cuban-green text-white rounded-t-3xl">
-            <h3 class="font-bold text-lg flex items-center">
-                <i class="fas fa-shopping-cart mr-2"></i>
-                Tu Carrito
-            </h3>
+            <h3 class="font-bold text-lg"><i class="fas fa-shopping-cart mr-2"></i>Tu Carrito</h3>
             <button onclick="toggleCart()" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30">
                 <i class="fas fa-times"></i>
             </button>
         </div>
         
         <div id="cartItems" class="flex-1 overflow-y-auto p-4 space-y-4">
-            <!-- Cart items injected here -->
+            <!-- Items dinámicos -->
         </div>
         
         <div class="border-t p-4 bg-gray-50">
@@ -504,10 +750,8 @@
             </div>
             
             <button onclick="openCheckout()" class="w-full btn-whatsapp text-white py-3 rounded-xl font-bold text-lg hover:opacity-90 transition flex items-center justify-center gap-2">
-                <i class="fab fa-whatsapp"></i>
-                Hacer pedido por WhatsApp
+                <i class="fab fa-whatsapp"></i>Hacer pedido por WhatsApp
             </button>
-            <p class="text-center text-xs text-gray-500 mt-2">Se abrirá WhatsApp con tu pedido</p>
         </div>
     </div>
 
@@ -516,8 +760,7 @@
         <div class="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto modal-enter" onclick="event.stopPropagation()">
             <div class="p-6">
                 <h3 class="text-2xl font-bold mb-4 flex items-center">
-                    <i class="fab fa-whatsapp text-green-500 mr-2"></i>
-                    Finalizar Pedido
+                    <i class="fab fa-whatsapp text-green-500 mr-2"></i>Finalizar Pedido
                 </h3>
                 
                 <form id="checkoutForm" class="space-y-4">
@@ -537,7 +780,7 @@
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Referencias (opcional)</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Referencias</label>
                         <input type="text" id="customerReferences" placeholder="Color de puerta, entre calles..." class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-cuban-green focus:border-transparent">
                     </div>
                     
@@ -552,15 +795,13 @@
                     </div>
                     
                     <div id="cashAmountContainer" class="hidden">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">¿Con cuánto pagas? (para calcular cambio)</label>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">¿Con cuánto pagas?</label>
                         <input type="number" id="cashAmount" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-cuban-green focus:border-transparent">
                     </div>
                     
                     <div class="bg-gray-50 p-4 rounded-lg">
                         <h4 class="font-bold mb-2">Resumen:</h4>
-                        <div id="checkoutSummary" class="text-sm space-y-1">
-                            <!-- Summary injected here -->
-                        </div>
+                        <div id="checkoutSummary" class="text-sm space-y-1"></div>
                     </div>
                     
                     <button type="submit" class="w-full bg-cuban-green text-white py-3 rounded-xl font-bold hover:bg-cuban-dark transition">
@@ -571,186 +812,143 @@
         </div>
     </div>
 
-    <!-- Service Modals -->
-    <div id="serviceModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4" onclick="closeModal('serviceModal')">
-        <div class="bg-white rounded-2xl max-w-md w-full modal-enter" onclick="event.stopPropagation()">
-            <div id="serviceContent" class="p-6">
-                <!-- Dynamic content -->
-            </div>
-        </div>
-    </div>
-
-    <!-- News Modal -->
-    <div id="newsModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4" onclick="closeModal('newsModal')">
-        <div class="bg-white rounded-2xl max-w-md w-full modal-enter" onclick="event.stopPropagation()">
-            <div class="p-6">
-                <h3 id="newsTitle" class="text-xl font-bold mb-4"></h3>
-                <div id="newsContent" class="text-gray-600 space-y-3"></div>
-                <button onclick="closeModal('newsModal')" class="mt-6 w-full bg-cuban-green text-white py-2 rounded-lg font-medium">Entendido</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Notification Toast -->
-    <div id="notificationToast" class="fixed top-24 right-4 bg-white rounded-lg shadow-xl p-4 z-50 hidden notification-toast max-w-xs border-l-4 border-cuban-green">
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-24 right-4 bg-white rounded-lg shadow-xl p-4 z-50 hidden toast-enter max-w-xs border-l-4 border-cuban-green">
         <div class="flex items-start gap-3">
-            <div class="text-cuban-green text-xl">
-                <i class="fas fa-check-circle"></i>
-            </div>
+            <div class="text-cuban-green text-xl"><i class="fas fa-check-circle"></i></div>
             <div>
                 <h4 id="toastTitle" class="font-bold text-sm">Producto añadido</h4>
                 <p id="toastMessage" class="text-xs text-gray-600 mt-1">Se ha añadido al carrito</p>
             </div>
-            <button onclick="hideToast()" class="text-gray-400 hover:text-gray-600">
-                <i class="fas fa-times"></i>
-            </button>
+            <button onclick="hideToast()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times"></i></button>
         </div>
     </div>
 
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT (NO TOCAR - FUNCIONALIDAD) -->
+    <!-- ============================================ -->
     <script>
         // ============================================
-        // DATOS DE PRODUCTOS
+        // CONFIGURACIÓN - EDITAR ESTA URL DEL CSV
         // ============================================
-        const products = [
-            {id:1, nombre:"Atún en lata", categoria:"Alimentos y conservas", precio:540, imagen:"https://i.postimg.cc/76xHK6zt/atun_precio_500.png", descripcion:"Lata estándar 200g", stock:10},
-            {id:2, nombre:"Pasta de tomate", categoria:"Alimentos y conservas", precio:350, imagen:"https://i.postimg.cc/gjjYPTNv/pasta_tomate_precio_350.png", descripcion:"Paquete", stock:10},
-            {id:3, nombre:"Pimiento fresco", categoria:"Alimentos y conservas", precio:750, imagen:"https://i.postimg.cc/4yyJTSBj/pimiento_presio_750.png", descripcion:"Unidad", stock:10},
-            {id:4, nombre:"Café Dualis 250 g", categoria:"Alimentos y conservas", precio:1450, imagen:"https://i.postimg.cc/WbZBX2hN/cafe_dualis_250_g_precio_1450.png", descripcion:"Paquete 250 g", stock:10},
-            {id:5, nombre:"Café Dufiltro 250 g", categoria:"Alimentos y conservas", precio:1450, imagen:"https://i.postimg.cc/hG26fv31/cafe_Dufiltro_250_g_precio_1450.png", descripcion:"Paquete 250 g", stock:10},
-            {id:6, nombre:"Café Enepa", categoria:"Alimentos y conservas", precio:470, imagen:"https://i.postimg.cc/nhY6f04N/cafe_enepa_precio_450.png", descripcion:"Paquete", stock:10},
-            {id:7, nombre:"Cartón de huevo 30 u", categoria:"Alimentos y conservas", precio:3000, imagen:"https://i.postimg.cc/sDWkwVvv/carton_de_huevo_30_u_precio_3000.png", descripcion:"Cartón", stock:10},
-            {id:8, nombre:"Leche condensada", categoria:"Alimentos y conservas", precio:950, imagen:"https://i.postimg.cc/tT2XwjtT/leche_condensada.png", descripcion:"Lata 397 g", stock:10},
-            {id:9, nombre:"Harina blanca 1 Kg", categoria:"Alimentos y conservas", precio:600, imagen:"https://i.postimg.cc/3xc2NHFB/harina_blanca1_kg.png", descripcion:"Paquete 1 Kg", stock:10},
-            {id:10, nombre:"Chicoticos Pelly 90 g", categoria:"Snacks y golosinas", precio:400, imagen:"https://i.postimg.cc/1zv2fXjZ/chicoticos_pelly_90_g_precio_400.png", descripcion:"Paquete 90 g", stock:10},
-            {id:11, nombre:"Papitas Campesinas", categoria:"Snacks y golosinas", precio:690, imagen:"https://i.postimg.cc/cLgrDtf9/papitas_campesinas_precio_690.png", descripcion:"Paquete", stock:10},
-            {id:12, nombre:"Pelly Jamón", categoria:"Snacks y golosinas", precio:580, imagen:"https://i.postimg.cc/pdQV7frX/pelly_jamon_precio_580.png", descripcion:"Paquete", stock:10},
-            {id:13, nombre:"Mayonesa Mediana", categoria:"Salsas", precio:850, imagen:"https://i.postimg.cc/KzJZw2rR/mayonesa_precio_850.png", descripcion:"Frasco mediano", stock:10},
-            {id:14, nombre:"Mayonesa Grande", categoria:"Salsas", precio:1100, imagen:"https://i.postimg.cc/Px2t9jzz/mayonesa_precio1100.png", descripcion:"Frasco grande", stock:10},
-            {id:15, nombre:"Cuchilla de Afeitar", categoria:"Higiene personal", precio:100, imagen:"https://i.postimg.cc/8CdkdW7x/cuchilla_de_afeitar_precio_100.png", descripcion:"Unidad", stock:10},
-            {id:16, nombre:"Jabón Marwa", categoria:"Higiene personal", precio:150, imagen:"https://i.postimg.cc/3RK8tRpR/jabon_marwa_precio_150.png", descripcion:"Pastilla", stock:10},
-            {id:17, nombre:"Papel Sanitario", categoria:"Higiene personal", precio:490, imagen:"https://i.postimg.cc/bwW289qD/papel_sanitario_precio_490i.png", descripcion:"Paquete", stock:10},
-            {id:18, nombre:"Toallas Sanitarias", categoria:"Higiene personal", precio:450, imagen:"https://i.postimg.cc/KjjZyH0b/toallas_sanitarias_precio_450.png", descripcion:"Paquete", stock:10},
-            {id:19, nombre:"Toallas Húmedas", categoria:"Higiene personal", precio:690, imagen:"https://i.postimg.cc/W4ZSP3cw/toallas_humedas_precio_690.png", descripcion:"Paquete", stock:10},
-            {id:20, nombre:"Jabón de Lavar", categoria:"Aseo del hogar", precio:250, imagen:"https://i.postimg.cc/V6YfK6Mz/jabon_de_lavar_precio_250.png", descripcion:"Pastilla", stock:10},
-            {id:21, nombre:"Perfume Candy", categoria:"Perfumes y desodorantes", precio:3100, imagen:"https://i.postimg.cc/vTgJRyhp/perfume_candy_precio_3100.png", descripcion:"Frasco 50 ml", stock:10},
-            {id:22, nombre:"Perfume genérico", categoria:"Perfumes y desodorantes", precio:3100, imagen:"https://i.postimg.cc/ZKrT0PPG/perfume_precio_3100.png", descripcion:"Frasco 50 ml", stock:10},
-            {id:23, nombre:"Perfume Q", categoria:"Perfumes y desodorantes", precio:3100, imagen:"https://i.postimg.cc/CL03P3Dn/perfume_q_precio_3100.png", descripcion:"Frasco 50 ml", stock:10},
-            {id:24, nombre:"Desodorante Obao", categoria:"Perfumes y desodorantes", precio:1100, imagen:"https://i.postimg.cc/PxtXSxD2/desodorante_obao_precio_1100.png", descripcion:"Spray/Roll-on", stock:10},
-            {id:25, nombre:"Desodorante Rush Blanco", categoria:"Perfumes y desodorantes", precio:1000, imagen:"https://i.postimg.cc/FR9rTRS8/desodorante_rush_blanco_precio_1000.png", descripcion:"Roll-on", stock:10},
-            {id:26, nombre:"Desodorante Rush", categoria:"Perfumes y desodorantes", precio:1000, imagen:"https://i.postimg.cc/sXVjTXSF/desodorante_rush_precio_1000.png", descripcion:"Spray", stock:10},
-            {id:27, nombre:"Colonia Niña", categoria:"Perfumes y desodorantes", precio:1100, imagen:"https://i.postimg.cc/G3v04rsM/colonia_nina.png", descripcion:"Botella 100 ml", stock:10},
-            {id:28, nombre:"Macarrones", categoria:"Pastas y fideos", precio:300, imagen:"https://i.postimg.cc/Hsmz1H69/macarrones_precio_300.png", descripcion:"Paquete estándar", stock:10},
-            {id:29, nombre:"Sopas instantáneas", categoria:"Pastas y fideos", precio:160, imagen:"https://i.postimg.cc/FzNTpQqK/sopas_instantaneas_precio_160.png", descripcion:"Paquete", stock:10},
-            {id:30, nombre:"Licor de fresa", categoria:"Bebidas alcohólicas y malta", precio:2500, imagen:"https://i.postimg.cc/59YT2x5p/licor_de_fresa_precio_2500.png", descripcion:"Botella", stock:10},
-            {id:31, nombre:"Licor Cocobay", categoria:"Bebidas alcohólicas y malta", precio:2500, imagen:"https://i.postimg.cc/7ZDW90Fz/locor_cocobay_precio_2500.png", descripcion:"Botella", stock:10},
-            {id:32, nombre:"Whisky Spirit 200 ml", categoria:"Bebidas alcohólicas y malta", precio:320, imagen:"https://i.postimg.cc/4N8W6q1t/tea_precio_320.png", descripcion:"Botella 200 ml", stock:10},
-            {id:33, nombre:"Whisky 1L", categoria:"Bebidas alcohólicas y malta", precio:1350, imagen:"https://i.postimg.cc/cLyrb4T0/whisky_1L_precio_1350.png", descripcion:"Botella 1 L", stock:10},
-            {id:34, nombre:"Whisky Sir Albin", categoria:"Bebidas alcohólicas y malta", precio:550, imagen:"https://i.postimg.cc/y84kbYnC/whisky_sir_albin_precio_550.png", descripcion:"Botella pequeña", stock:10},
-            {id:35, nombre:"Vino Pluvium", categoria:"Bebidas alcohólicas y malta", precio:1200, imagen:"https://i.postimg.cc/XNLLWmmx/vino_pluvium_precio_1200.png", descripcion:"Botella", stock:10},
-            {id:36, nombre:"Baterías Triple A", categoria:"Electrónicos y accesorios", precio:300, imagen:"https://i.postimg.cc/DZ2vxZsT/Gemini_Generated_Image_824rio824rio824r.png", descripcion:"Pack de 4 unidades", stock:10}
-        ];
+        // REEMPLAZA ESTA URL con la de tu archivo CSV cuando lo subas
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTu8i5Lq-5yJMQNqK2j8eLkF4mYx9zA8B3cD4eF5gH6iJ7kL8mN9oP0qR1sT2uV3wX4yZ5aB6cD7eF8gH9iJ0kL1mN2oP3qR4sT5uV6wX7yZ8aB9cD0eF1gH2iJ3kL4mN5oP6qR7sT8uV9wX0yZ1aB2cD3eF4gH5/pub?output=csv';
+        // Instrucciones para crear tu CSV:
+        // 1. Crea una hoja de Google Sheets
+        // 2. Pon estos encabezados: id,nombre,categoria,precio,imagen,descripcion,stock
+        // 3. Llena tus productos
+        // 4. Archivo > Compartir > Publicar en la web > CSV
+        // 5. Copia esa URL y pégala arriba
 
         // ============================================
         // VARIABLES GLOBALES
         // ============================================
+        let products = [];
         let cart = [];
         let currentModalProduct = null;
         let modalQuantity = 1;
         let currentCategory = 'todos';
-        let isOneSignalInitialized = false;
-        let userSubscriptionId = null;
-
-        // Rangos de envío
-        const SHIPPING_RANGES = [
-            { max: 2000, fee: 400, discount: "0%" },
-            { max: 5000, fee: 300, discount: "25%" },
-            { max: Infinity, fee: 200, discount: "50%" }
-        ];
 
         // ============================================
         // INICIALIZACIÓN
         // ============================================
         document.addEventListener('DOMContentLoaded', function() {
-            renderProducts();
-            initializeOneSignal();
-            setupEventListeners();
-            updateCartUI();
-            
-            // Verificar carrito guardado
+            // Cargar carrito guardado
             const savedCart = localStorage.getItem('elResolvitoCart');
             if (savedCart) {
                 cart = JSON.parse(savedCart);
                 updateCartUI();
             }
+            
+            // Cargar productos desde CSV
+            loadProductsFromCSV();
+            
+            // Inicializar OneSignal
+            initializeOneSignal();
+            
+            // Event listeners
+            setupEventListeners();
         });
 
         // ============================================
-        // ONESIGNAL INTEGRACIÓN
+        // CARGA DE PRODUCTOS DESDE CSV
         // ============================================
-        function initializeOneSignal() {
-            if (typeof OneSignal === 'undefined') {
-                console.log('OneSignal no disponible');
-                return;
+        async function loadProductsFromCSV() {
+            const grid = document.getElementById('productsGrid');
+            const loading = document.getElementById('loadingProducts');
+            const error = document.getElementById('loadError');
+            
+            try {
+                // Intentar cargar desde CSV
+                const response = await fetch(CSV_URL);
+                const csvText = await response.text();
+                products = parseCSV(csvText);
+                
+                // Guardar en localStorage para offline
+                localStorage.setItem('elResolvitoProducts', JSON.stringify(products));
+                
+                // Mostrar productos
+                loading.classList.add('hidden');
+                grid.classList.remove('hidden');
+                renderProducts();
+                
+            } catch (err) {
+                console.log('Error cargando CSV:', err);
+                
+                // Intentar usar datos guardados
+                const saved = localStorage.getItem('elResolvitoProducts');
+                if (saved) {
+                    products = JSON.parse(saved);
+                    loading.classList.add('hidden');
+                    grid.classList.remove('hidden');
+                    renderProducts();
+                    showToast('Modo offline', 'Mostrando últimos productos guardados');
+                } else {
+                    // Usar datos de ejemplo si no hay nada
+                    loading.classList.add('hidden');
+                    error.classList.remove('hidden');
+                    // Cargar productos de respaldo
+                    loadBackupProducts();
+                }
             }
+        }
 
-            const oneSignalAppId = "1c761702-8750-4994-97eb-06e700a50236";
+        function parseCSV(csvText) {
+            const lines = csvText.trim().split('\n');
+            const headers = lines[0].split(',').map(h => h.trim());
+            const result = [];
             
-            window.OneSignal = window.OneSignal || [];
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',');
+                const obj = {};
+                headers.forEach((header, index) => {
+                    let value = values[index] ? values[index].trim() : '';
+                    // Limpiar comillas
+                    if (value.startsWith('"') && value.endsWith('"')) {
+                        value = value.slice(1, -1);
+                    }
+                    // Convertir números
+                    if (header === 'id' || header === 'precio' || header === 'stock') {
+                        value = parseInt(value) || 0;
+                    }
+                    obj[header] = value;
+                });
+                result.push(obj);
+            }
             
-            OneSignal.push(function() {
-                OneSignal.init({
-                    appId: oneSignalAppId,
-                    notifyButton: { enable: false },
-                    allowLocalhostAsSecureOrigin: true,
-                    autoRegister: false,
-                    autoResubscribe: true,
-                    persistNotification: false,
-                    welcomeNotification: {
-                        title: "¡Bienvenido a El Resolvito!",
-                        message: "Recibirás notificaciones de ofertas y nuevos productos.",
-                    }
-                });
-
-                OneSignal.getUserId(function(userId) {
-                    if (userId) {
-                        userSubscriptionId = userId;
-                        hideNotificationButton();
-                    } else {
-                        showNotificationButton();
-                    }
-                });
-
-                OneSignal.on('subscriptionChange', function(isSubscribed) {
-                    if (isSubscribed) {
-                        OneSignal.getUserId(function(userId) {
-                            userSubscriptionId = userId;
-                            hideNotificationButton();
-                            showToast('¡Notificaciones activadas!', 'Ahora recibirás nuestras mejores ofertas');
-                        });
-                    } else {
-                        userSubscriptionId = null;
-                        showNotificationButton();
-                    }
-                });
-
-                isOneSignalInitialized = true;
-            });
+            return result.filter(p => p.activo !== 'no' && p.nombre);
         }
 
-        function showNotificationButton() {
-            const btn = document.getElementById('notificationBtn');
-            if (btn) btn.classList.remove('hidden');
+        // Productos de respaldo si el CSV falla
+        function loadBackupProducts() {
+            products = [
+                {id:1, nombre:"Atún en lata", categoria:"Alimentos y conservas", precio:540, imagen:"https://i.postimg.cc/76xHK6zt/atun_precio_500.png", descripcion:"Lata 200g", stock:10},
+                {id:2, nombre:"Café Dualis 250g", categoria:"Alimentos y conservas", precio:1450, imagen:"https://i.postimg.cc/WbZBX2hN/cafe_dualis_250_g_precio_1450.png", descripcion:"Paquete 250g", stock:10},
+                {id:3, nombre:"Jabón de Lavar", categoria:"Aseo del hogar", precio:250, imagen:"https://i.postimg.cc/V6YfK6Mz/jabon_de_lavar_precio_250.png", descripcion:"Pastilla", stock:10}
+            ];
+            document.getElementById('productsGrid').classList.remove('hidden');
+            renderProducts();
         }
-
-        function hideNotificationButton() {
-            const btn = document.getElementById('notificationBtn');
-            if (btn) btn.classList.add('hidden');
-        }
-
-        document.getElementById('notificationBtn')?.addEventListener('click', function() {
-            if (!isOneSignalInitialized) return;
-            OneSignal.showNativePrompt();
-        });
 
         // ============================================
         // RENDERIZADO DE PRODUCTOS
@@ -786,7 +984,8 @@
             grid.innerHTML = filtered.map(product => `
                 <div class="product-card bg-white rounded-xl shadow-md overflow-hidden cursor-pointer" onclick="openProductModal(${product.id})">
                     <div class="relative h-40 overflow-hidden bg-gray-100">
-                        <img src="${product.imagen}" alt="${product.nombre}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
+                        <img src="${product.imagen}" alt="${product.nombre}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" 
+                             onerror="this.src='https://via.placeholder.com/300x200?text=Sin+Imagen'">
                         ${product.stock < 5 ? '<span class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">¡Últimos!</span>' : ''}
                     </div>
                     <div class="p-3">
@@ -810,9 +1009,8 @@
         function filterCategory(category) {
             currentCategory = category;
             
-            // Actualizar UI de botones
             document.querySelectorAll('.category-pill').forEach(btn => {
-                if (btn.textContent.trim() === getCategoryLabel(category)) {
+                if (btn.textContent.trim().toLowerCase() === getCategoryLabel(category).toLowerCase()) {
                     btn.classList.remove('bg-gray-100', 'text-gray-700');
                     btn.classList.add('bg-cuban-green', 'text-white');
                 } else {
@@ -859,10 +1057,6 @@
             document.getElementById('modalPrice').textContent = `$${product.precio}`;
             document.getElementById('modalCategory').textContent = product.categoria;
             document.getElementById('modalQuantity').textContent = modalQuantity;
-            document.getElementById('modalStock').textContent = product.stock > 0 ? 'Disponible' : 'Agotado';
-            document.getElementById('modalStock').className = product.stock > 0 ? 
-                'absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full stock-badge' :
-                'absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full stock-badge';
             
             document.getElementById('productModal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
@@ -909,12 +1103,20 @@
             
             saveCart();
             updateCartUI();
-            showToast('Producto añadido', `${product.nombre} x${quantity} añadido al carrito`);
-            
-            // Animar botón del carrito
-            const cartBtn = document.querySelector('.fa-shopping-cart').parentElement;
-            cartBtn.classList.add('scale-125');
-            setTimeout(() => cartBtn.classList.remove('scale-125'), 200);
+            showToast('Producto añadido', `${product.nombre} x${quantity}`);
+        }
+
+        function addMayorToCart(name, price, qty) {
+            cart.push({
+                id: 'mayor-' + Date.now(),
+                name: name + ' (Por Mayor)',
+                price: price,
+                image: 'https://via.placeholder.com/100?text=Mayor',
+                quantity: qty
+            });
+            saveCart();
+            updateCartUI();
+            showToast('Añadido', `${name} añadido al pedido mayorista`);
         }
 
         function removeFromCart(productId) {
@@ -941,58 +1143,47 @@
         }
 
         function calculateShipping(subtotal) {
-            for (const range of SHIPPING_RANGES) {
-                if (subtotal <= range.max) {
-                    return { fee: range.fee, text: range.max === Infinity ? 'Más de $5,000' : `Hasta $${range.max}` };
-                }
-            }
-            return { fee: 200, text: 'Más de $5,000' };
+            if (subtotal > 5000) return { fee: 0, text: 'Gratis (+$5000)' };
+            if (subtotal > 2000) return { fee: 300, text: '$300 ($2001-$5000)' };
+            return { fee: 400, text: '$400 (hasta $2000)' };
         }
 
         function updateCartUI() {
             const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             
-            // Actualizar contadores
-            const countElements = [document.getElementById('cartCount'), document.getElementById('cartCountMobile')];
-            countElements.forEach(el => {
+            document.querySelectorAll('#cartCount, #cartCountMobile').forEach(el => {
                 if (el) {
                     el.textContent = count;
                     el.classList.toggle('hidden', count === 0);
                 }
             });
             
-            // Renderizar items
             const cartItems = document.getElementById('cartItems');
             if (cart.length === 0) {
                 cartItems.innerHTML = `
                     <div class="text-center py-8 text-gray-500">
                         <i class="fas fa-shopping-cart text-4xl mb-3 opacity-30"></i>
                         <p>Tu carrito está vacío</p>
-                        <button onclick="toggleCart()" class="mt-4 text-cuban-green font-medium">Ver productos</button>
                     </div>
                 `;
             } else {
                 cartItems.innerHTML = cart.map(item => `
                     <div class="flex gap-3 bg-gray-50 p-3 rounded-lg">
-                        <img src="${item.image}" class="w-16 h-16 object-cover rounded-lg">
+                        <img src="${item.image}" class="w-16 h-16 object-cover rounded-lg" onerror="this.src='https://via.placeholder.com/100'">
                         <div class="flex-1">
                             <h4 class="font-medium text-sm line-clamp-1">${item.name}</h4>
                             <p class="text-cuban-green font-bold">$${item.price}</p>
                             <div class="flex items-center gap-2 mt-1">
-                                <button onclick="updateCartItemQuantity(${item.id}, -1)" class="w-6 h-6 bg-white rounded shadow text-xs">-</button>
+                                <button onclick="updateCartItemQuantity('${item.id}', -1)" class="w-6 h-6 bg-white rounded shadow text-xs">-</button>
                                 <span class="text-sm font-medium w-6 text-center">${item.quantity}</span>
-                                <button onclick="updateCartItemQuantity(${item.id}, 1)" class="w-6 h-6 bg-white rounded shadow text-xs">+</button>
-                                <button onclick="removeFromCart(${item.id})" class="ml-auto text-red-500 text-xs">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                <button onclick="updateCartItemQuantity('${item.id}', 1)" class="w-6 h-6 bg-white rounded shadow text-xs">+</button>
+                                <button onclick="removeFromCart('${item.id}')" class="ml-auto text-red-500 text-xs"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
                     </div>
                 `).join('');
             }
             
-            // Calcular totales
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             const shipping = calculateShipping(subtotal);
             const total = subtotal + shipping.fee;
@@ -1022,13 +1213,12 @@
         // ============================================
         function openCheckout() {
             if (cart.length === 0) {
-                showToast('Carrito vacío', 'Añade productos antes de continuar');
+                showToast('Carrito vacío', 'Añade productos primero');
                 return;
             }
             
             toggleCart();
             
-            // Generar resumen
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             const shipping = calculateShipping(subtotal);
             
@@ -1040,7 +1230,7 @@
                     </div>
                 `).join('')}
                 <div class="border-t pt-1 mt-1 flex justify-between font-bold">
-                    <span>Total + Envío ($${shipping.fee}):</span>
+                    <span>Total + Envío:</span>
                     <span>$${subtotal + shipping.fee}</span>
                 </div>
             `;
@@ -1054,12 +1244,7 @@
         });
 
         document.getElementById('paymentMethod')?.addEventListener('change', function(e) {
-            const cashContainer = document.getElementById('cashAmountContainer');
-            if (e.target.value === 'efectivo') {
-                cashContainer.classList.remove('hidden');
-            } else {
-                cashContainer.classList.add('hidden');
-            }
+            document.getElementById('cashAmountContainer').classList.toggle('hidden', e.target.value !== 'efectivo');
         });
 
         function sendOrder() {
@@ -1074,7 +1259,6 @@
             const shipping = calculateShipping(subtotal);
             const total = subtotal + shipping.fee;
             
-            // Construir mensaje de WhatsApp
             let message = `*¡Nuevo Pedido El Resolvito!*\n\n`;
             message += `*Cliente:* ${name}\n`;
             message += `*Teléfono:* ${phone}\n`;
@@ -1091,35 +1275,32 @@
             });
             
             message += `\n*Subtotal:* $${subtotal}`;
-            message += `\n*Envío:* $${shipping.fee} (${shipping.text})`;
+            message += `\n*Envío:* $${shipping.fee}`;
             message += `\n*TOTAL:* $${total}`;
             message += `\n\n¡Gracias por tu compra!`;
             
-            // Enviar a Google Sheets
-            sendToGoogleSheets({
-                nombre: name,
+            // Guardar en Google Sheets
+            saveToSheets({
+                fecha: new Date().toLocaleString(),
+                cliente: name,
                 telefono: phone,
                 direccion: address,
-                referencias: references,
-                pago: payment,
                 productos: cart.map(i => `${i.name}x${i.quantity}`).join(', '),
                 total: total,
-                fecha: new Date().toLocaleString()
+                pago: payment
             });
             
-            // Abrir WhatsApp
             window.open(`https://wa.me/5356382909?text=${encodeURIComponent(message)}`, '_blank');
             
-            // Limpiar carrito
             cart = [];
             saveCart();
             updateCartUI();
             closeModal('checkoutModal');
-            
             showToast('¡Pedido enviado!', 'Te redirigimos a WhatsApp');
         }
 
-        function sendToGoogleSheets(data) {
+        function saveToSheets(data) {
+            // URL de tu Google Apps Script
             const scriptUrl = 'https://script.google.com/macros/s/AKfycby9Sk3Fz2_WqRQsEXrezpwqKbpYhqW_-ialMJcYKPdvZkrBfNReWWFfQ-VnXTrkJY8W/exec';
             
             fetch(scriptUrl, {
@@ -1127,92 +1308,83 @@
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
-            }).catch(err => console.log('Error Sheets:', err));
+            }).catch(() => {});
         }
 
         // ============================================
-        // SERVICIOS
+        // ONESIGNAL
         // ============================================
-        function openServiceModal(type) {
-            const modal = document.getElementById('serviceModal');
-            const content = document.getElementById('serviceContent');
+        function initializeOneSignal() {
+            if (typeof OneSignal === 'undefined') return;
             
-            const services = {
-                barbero: {
-                    icon: '💈',
-                    title: 'Servicio de Barbero',
-                    desc: 'Cortes modernos, barba, tratamientos capilares y más.',
-                    details: 'Disponible: Lunes a Sábado 9am - 7pm\nPrecios desde $300 CUP\nDomicilio: +$100'
-                },
-                tapiceria: {
-                    icon: '🛋️',
-                    title: 'Tapicería y Muebles',
-                    desc: 'Restauración de sillas, sofás, cambio de tela y reparación de estructuras.',
-                    details: 'Presupuesto sin compromiso\nTrabajo garantizado\nMateriales de calidad'
-                },
-                renta: {
-                    icon: '🏠',
-                    title: 'Casa de Renta',
-                    desc: 'Alojamiento independiente en La Habana Vieja.',
-                    details: 'WiFi incluido\nAire acondicionado\nCocina equipada\nPrecio: $25/noche'
-                },
-                reparaciones: {
-                    icon: '🔨',
-                    title: 'Reparaciones Generales',
-                    desc: 'Electricidad, plomería, carpintería, pintura.',
-                    details: 'Urgencias 24h\nPresupuesto gratis\nExperiencia garantizada'
-                }
-            };
+            const oneSignalAppId = "1c761702-8750-4994-97eb-06e700a50236";
             
-            const s = services[type];
-            content.innerHTML = `
-                <div class="text-center mb-4">
-                    <div class="text-6xl mb-2">${s.icon}</div>
-                    <h3 class="text-2xl font-bold">${s.title}</h3>
-                </div>
-                <p class="text-gray-600 mb-4">${s.desc}</p>
-                <div class="bg-gray-50 p-4 rounded-lg mb-4 whitespace-pre-line text-sm">${s.details}</div>
-                <a href="https://wa.me/5356382909?text=Hola, estoy interesado en el servicio de ${s.title}" target="_blank" class="block w-full btn-whatsapp text-white text-center py-3 rounded-xl font-bold">
-                    <i class="fab fa-whatsapp mr-2"></i>Solicitar por WhatsApp
-                </a>
-            `;
-            
-            modal.classList.remove('hidden');
+            window.OneSignal = window.OneSignal || [];
+            OneSignal.push(function() {
+                OneSignal.init({
+                    appId: oneSignalAppId,
+                    notifyButton: { enable: false },
+                    allowLocalhostAsSecureOrigin: true,
+                    autoRegister: false,
+                    welcomeNotification: {
+                        title: "¡Bienvenido a El Resolvito!",
+                        message: "Recibirás notificaciones de ofertas y nuevos productos.",
+                    }
+                });
+
+                OneSignal.getUserId(function(userId) {
+                    if (userId) {
+                        document.getElementById('notificationBtn').classList.add('hidden');
+                    } else {
+                        document.getElementById('notificationBtn').classList.remove('hidden');
+                    }
+                });
+            });
         }
 
-        // ============================================
-        // NOTICIAS/OFERTAS
-        // ============================================
-        function openNewsModal(type) {
-            const modal = document.getElementById('newsModal');
-            const title = document.getElementById('newsTitle');
-            const content = document.getElementById('newsContent');
-            
-            if (type === 'mayor') {
-                title.textContent = 'Compra por Mayor';
-                content.innerHTML = `
-                    <p>¿Tienes un negocio o quieres revender? Tenemos precios especiales:</p>
-                    <ul class="list-disc pl-5 space-y-1 mt-2">
-                        <li>Café (5+ unidades): 10% descuento</li>
-                        <li>Huevos (3+ cartones): $2800/cartón</li>
-                        <li>Conservas (10+ unidades): 15% descuento</li>
-                    </ul>
-                    <p class="mt-3 font-medium">Contacta por WhatsApp para más detalles.</p>
-                `;
-            } else {
-                title.textContent = 'Envío Gratis';
-                content.innerHTML = `
-                    <p>Condiciones de envío:</p>
-                    <ul class="list-disc pl-5 space-y-1 mt-2">
-                        <li>Compras >$5000: Envío GRATIS</li>
-                        <li>Compras $2001-$5000: Envío $300</li>
-                        <li>Compras <$2000: Envío $400</li>
-                    </ul>
-                    <p class="mt-3 text-sm text-gray-500">Solo válido para La Habana Vieja.</p>
-                `;
+        document.getElementById('notificationBtn')?.addEventListener('click', function() {
+            if (typeof OneSignal !== 'undefined') {
+                OneSignal.showNativePrompt();
             }
-            
-            modal.classList.remove('hidden');
+        });
+
+        // ============================================
+        // FUNCIONES DE SECCIONES ESPECÍFICAS
+        // ============================================
+        function showPromoDetail(id) {
+            const promos = {
+                1: { title: 'Combo Desayuno', desc: 'Incluye: Café Dualis 250g + Leche Condensada + Cartón de Huevos. Precio especial: $4,500 (ahorras $850)' },
+                2: { title: 'Alojamiento Weekend', desc: 'Reserva 3 noches cualquier día del fin de semana y paga solo 2. Válido hasta marzo 2024.' },
+                3: { title: 'Precio Especial Mayor', desc: 'Descuentos de hasta 15% en compras por volumen. Consulta disponibilidad por WhatsApp.' }
+            };
+            const promo = promos[id];
+            if (promo) {
+                alert(`${promo.title}\n\n${promo.desc}`);
+            }
+        }
+
+        function openReservationModal(property) {
+            const message = `Hola, estoy interesado en reservar: ${property}`;
+            window.open(`https://wa.me/5356382909?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function openServiceDetail(service) {
+            const services = {
+                barbero: 'Barbero a domicilio. Servicios: Corte ($300), Barba ($150), Combo ($400). Disponible: Lunes a Sábado 9am-7pm.',
+                tapiceria: 'Tapicería y restauración de muebles. Presupuesto sin compromiso. Garantía de 3 meses en el trabajo.',
+                electricidad: 'Servicio eléctrico 24 horas. Instalaciones, reparaciones, mantenimiento. Urgencias: +$200',
+                plomeria: 'Plomería general. Destapes, fugas, instalaciones. Servicio rápido en toda La Habana.'
+            };
+            alert(services[service] || 'Servicio disponible. Contacta por WhatsApp para más detalles.');
+        }
+
+        function openArticle(id) {
+            const articles = {
+                1: '5 recetas fáciles: 1) Tostadas con café, 2) Huevos revueltos, 3) Ensalada de atún... (Artículo completo próximamente)',
+                2: 'Guía de alquiler: Verifica la ubicación, pregunta por WiFi, confirma el precio final... (Artículo completo próximamente)',
+                3: 'Mantenimiento: Revisa grifos mensualmente, limpia filtros de aire, revisa instalaciones eléctricas... (Artículo completo próximamente)'
+            };
+            alert(articles[id]);
         }
 
         // ============================================
@@ -1224,31 +1396,27 @@
         }
 
         function toggleMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
+            document.getElementById('mobileMenu').classList.toggle('hidden');
         }
 
         function showToast(title, message) {
-            const toast = document.getElementById('notificationToast');
+            const toast = document.getElementById('toast');
             document.getElementById('toastTitle').textContent = title;
             document.getElementById('toastMessage').textContent = message;
-            
             toast.classList.remove('hidden');
             setTimeout(hideToast, 3000);
         }
 
         function hideToast() {
-            document.getElementById('notificationToast').classList.add('hidden');
+            document.getElementById('toast').classList.add('hidden');
         }
 
         function setupEventListeners() {
-            // Cerrar modales con ESC
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
-                    ['productModal', 'checkoutModal', 'serviceModal', 'newsModal'].forEach(id => {
-                        document.getElementById(id)?.classList.add('hidden');
-                    });
-                    document.body.style.overflow = '';
+                    ['productModal', 'checkoutModal'].forEach(id => closeModal(id));
+                    document.getElementById('cartSidebar').classList.remove('cart-open');
+                    document.getElementById('cartOverlay').classList.add('hidden');
                 }
             });
         }
